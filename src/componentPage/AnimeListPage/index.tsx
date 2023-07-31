@@ -2,87 +2,83 @@ import { css } from "@emotion/react";
 import { Button } from "src/components/Button";
 import { PageContainer } from "src/components/PageContainer";
 import { colors } from "src/utils/colors";
-import { MdCollections } from "react-icons/md";
+import { MdBookmarks, MdCollections } from "react-icons/md";
 import { motion } from "framer-motion";
 import React from "react";
-import { Carousel } from "../../components/Carousel";
-import { CarouselChild } from "../../components/Carousel/CarouselChild";
-import { Badge } from "../../components/Badge";
-import Link from "next/link";
+import { TrendingAnimeCarousel } from "./fragments/TrendingAnimeCarousel";
+import { RecentAnime } from "./fragments/RecentAnime";
 import { gql, useQuery } from "@apollo/client";
+import Link from "next/link";
 
 export function AnimeListPage() {
-  const ref = React.useRef<HTMLDivElement>(null);
   return (
     <PageContainer>
-      <motion.nav
-        initial={{ opacity: 0, y: -100 }}
-        animate={{ opacity: 1, y: 0 }}
-        css={css({
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "0.5rem 1.5rem",
-          position: "sticky",
-          top: 0,
-        })}
-      >
-        <h3
-          css={css({
-            color: colors.primary["500"],
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-          })}
-        >
-          意{" "}
-          <span
-            css={css({
-              color: colors.gray["800"],
-            })}
-          >
-            Lite
-          </span>
-        </h3>
-        <Button
-          size="md"
-          variant="ghost"
-          colorScheme="gray"
-          customCSS={css({
-            padding: "0.75rem",
-          })}
-        >
-          <MdCollections />
-        </Button>
-      </motion.nav>
+      <NavBar />
       <div
         css={css({
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          padding: "1rem",
           gap: "1rem",
         })}
       >
-        <h2
+        <TrendingAnimeCarousel
+          customCSS={css({
+            height: "18.75rem",
+            borderRadius: "0",
+          })}
+        />
+      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+        css={css({
+          display: "flex",
+          flexDirection: "column",
+        })}
+      >
+        <h3
           css={css({
-            color: colors.gray["700"],
+            color: colors.gray["800"],
             fontSize: "1.25rem",
             fontWeight: "bold",
-            width: "100%",
+            padding: "0.75rem",
           })}
         >
-          Trending Anime
-        </h2>
-        <TrendingAnimeCarousel />
-      </div>
+          Ongoing Anime
+        </h3>
+        <RecentAnime />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+        css={css({
+          display: "flex",
+          flexDirection: "column",
+        })}
+      >
+        <h3
+          css={css({
+            color: colors.gray["800"],
+            fontSize: "1.25rem",
+            fontWeight: "bold",
+            padding: "0.75rem",
+          })}
+        >
+          Popular Anime
+        </h3>
+        <PopularAnime />
+      </motion.div>
     </PageContainer>
   );
 }
 
-const GET_TRENDING_ANIME = gql`
-  query GetTrendingAnime {
-    Page(page: 1, perPage: 10) {
-      media(sort: TRENDING_DESC, type: ANIME) {
+const GET_POPULAR_ANIME = gql`
+  query GetPopularAnime($page: Int) {
+    Page(page: $page, perPage: 10) {
+      media(sort: POPULARITY_DESC, type: ANIME) {
         id
         title {
           romaji
@@ -92,121 +88,196 @@ const GET_TRENDING_ANIME = gql`
         }
         bannerImage
         genres
-        description
       }
     }
   }
 `;
 
-const TrendingAnimeCarousel = () => {
-  const { data, loading } = useQuery(GET_TRENDING_ANIME)
-
-  const trendingAnime = data?.Page?.media || [];
+const PopularAnime = () => {
+  const [page, setPage] = React.useState(1);
+  const [popularAnime, setPopularAnime] = React.useState<any[]>([]); // Replace 'any' with the actual type of anime data
+  const { loading, fetchMore } = useQuery(GET_POPULAR_ANIME, {
+    variables: {
+      page,
+    },
+    onCompleted: (data) => {
+      setPopularAnime((prevPopularAnime) => [...prevPopularAnime, ...data?.Page?.media]);
+    }
+  });
 
   return (
-    <Carousel customCSS={css({
-      backgroundColor: colors.gray['300'],
-    })}>
-      {trendingAnime.map((anime: any) => (
-        <CarouselChild
-          key={anime.id}
-          customCSS={css({
+    <div
+      css={css({
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        alignItems: "center",
+        gap: "1rem",
+        padding: "1rem",
+      })}
+    >
+      {popularAnime.map((anime: any) => (
+        <motion.div
+          css={css({
             backgroundImage: `url(${anime.bannerImage})`,
-            backgroundSize: 'cover',
+            backgroundColor: colors.gray["800"],
+            width: "100%",
+            borderRadius: "1rem",
+            overflow: "hidden",
           })}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
         >
-          <div
+          <Link
+            href={`/anime/${anime.id}`}
             css={css({
-              display: 'flex',
-              flexDirection: 'row',
-              padding: '1rem',
-              alignItems: 'center',
-              width: '100%',
-              height: '100%',
-              gap: '1rem',
-              backgroundColor: 'rgba(0,0,0,0.5)',
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "start",
+              width: "100%",
+              gap: "1rem",
+              padding: "1rem",
+              backgroundColor: "rgba(0,0,0,0.7)",
+              textDecoration: "none",
             })}
           >
             <img
               src={anime.coverImage.large}
-              alt="anime cover"
               css={css({
-                borderRadius: '1rem',
-                width: '160px',
-                height: '100%',
-                objectFit: 'cover',
-                '@media (max-width: 768px)': {
-                  height: '120px',
-                  alignSelf: 'start',
-                  marginTop: '1rem',
-                  width: '80px',
-                },
+                width: "128px",
+                height: "160px",
+                objectFit: "cover",
+                borderRadius: "0.5rem",
+                userSelect: "none",
               })}
+              draggable={false}
             />
             <div
               css={css({
-                display: 'flex',
-                padding: '1rem',
-                flexDirection: 'column',
-                height: '100%',
-                overflow: 'hidden',
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "0.5rem",
+                padding: "0.5rem",
                 flex: 1,
-                gap: '1rem',
               })}
             >
-              <Link
-                href={`/anime/${anime.id}`}
+              <h3
                 css={css({
-                  color: colors.gray['50'],
-                  fontSize: '2rem',
-                  fontWeight: 'bold',
-                  '@media (max-width: 768px)': {  
-                    fontSize: '1.5rem',
-                  },
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  display: '-webkit-box',
-                  maxHeight: '3rem',
-                  WebkitLineClamp: 1,
-                  WebkitBoxOrient: 'vertical',
+                  color: colors.gray["50"],
+                  fontSize: "1.25rem",
+                  fontWeight: "bold",
                 })}
               >
                 {anime.title.romaji}
-              </Link>
-              <div
-                css={css({
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  justifyContent: 'flex-start',
-                  gap: '0.5rem',
-                })}
-              >
-                {anime.genres.map((genre: string) => (
-                  <Badge key={genre} colorScheme="primary">
-                    {genre}
-                  </Badge>
-                ))}
-              </div>
+              </h3>
               <p
                 css={css({
-                  color: colors.gray['300'],
-                  fontSize: '0.9rem',
-                  lineHeight: '1.25rem',
-                  width: '100%',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  display: '-webkit-box',
-                  maxHeight: '4rem',
-                  WebkitLineClamp: 3,
-                  WebkitBoxOrient: 'vertical',
+                  color: colors.gray["300"],
+                  fontSize: "0.75rem",
                 })}
               >
-                {anime.description}
+                {anime.genres.map((genre: any) => (
+                  <>
+                    {genre +
+                      (anime.genres.indexOf(genre) === anime.genres.length - 1
+                        ? ""
+                        : " • ")}
+                  </>
+                ))}
               </p>
             </div>
-          </div>
-        </CarouselChild>
+          </Link>
+        </motion.div>
       ))}
-    </Carousel>
+      <motion.div
+        css={css({
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gridColumn: "span 2",
+          width: "100%",
+          height: "60px",
+        })}
+        onViewportEnter={()=>{
+          if (loading) return;
+          fetchMore({
+            variables: {
+              page: page + 1,
+            },
+          });
+          setPage(page + 1);
+        }}
+      >
+        <p
+          css={css({
+            color: colors.gray["600"],
+            fontSize: "0.75rem",
+          })}
+        >
+          Loading...
+        </p>
+      </motion.div>
+    </div>
+  );
+};
+const NavBar = () => {
+  // check if scroll position is at the top
+  const [isAtTop, setIsAtTop] = React.useState(true);
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY === 0) {
+        setIsAtTop(true);
+      } else {
+        setIsAtTop(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <motion.nav
+      initial={{ opacity: 0, y: -100 }}
+      animate={{ opacity: 1, y: 0 }}
+      css={css({
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "0.5rem 1.5rem",
+        position: "fixed",
+        top: 0,
+        zIndex: 50,
+        width: "100%",
+        backgroundColor: isAtTop ? "transparent" : colors.gray["200"],
+      })}
+    >
+      <h3
+        css={css({
+          color: colors.primary["500"],
+          fontSize: "1.5rem",
+          fontWeight: "bold",
+        })}
+      >
+        意{" "}
+        <span
+          css={css({
+            color: isAtTop ? colors.gray["200"] : colors.gray["800"],
+          })}
+        >
+          Lite
+        </span>
+      </h3>
+      <Button
+        size="md"
+        variant="ghost"
+        colorScheme="primary"
+        customCSS={css({
+          padding: "0.5rem",
+        })}
+      >
+        <MdBookmarks />
+      </Button>
+    </motion.nav>
   );
 };

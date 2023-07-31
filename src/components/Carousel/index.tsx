@@ -29,7 +29,6 @@ export const Carousel = (props: CarouselProps) => {
           width: "100%",
           height: "100%",
           overflowX: "scroll",
-          borderRadius: "1rem",
           scrollSnapType: "x mandatory",
           scrollBehavior: "smooth",
           "&::-webkit-scrollbar": {
@@ -49,8 +48,8 @@ export const Carousel = (props: CarouselProps) => {
         css={css({
           display: "flex",
           justifyContent: "end",
-          gap: "1rem",
-          padding: "1rem",
+          gap: "0.5rem",
+          padding: "0 0.5rem",
           alignItems: "end",
           position: "absolute",
           bottom: 0,
@@ -73,6 +72,7 @@ export const Carousel = (props: CarouselProps) => {
             },
           })}
           variant="ghost"
+          size="sm"
           onClick={() => {
             if ((ref.current?.scrollLeft || 0) === 0) {
               ref.current?.scrollTo({
@@ -105,6 +105,7 @@ export const Carousel = (props: CarouselProps) => {
             },
           })}
           variant="ghost"
+          size="sm"
           // onClick scroll to next child
           onClick={() => {
             // Calculate the maximum scroll position

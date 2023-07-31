@@ -4,7 +4,7 @@ import { colors } from "src/utils/colors";
 import { SerializedStyles } from "@emotion/react/macro";
 import { CSSObject } from "@emotion/react";
 
-interface ButtonProps {
+interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement>{
   children?: React.ReactNode;
   customCSS?: SerializedStyles;
   variant?: "solid" | "outline" | "ghost";

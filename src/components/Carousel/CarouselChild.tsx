@@ -1,4 +1,5 @@
 import { SerializedStyles, css } from "@emotion/react";
+import { MotionProps, motion } from "framer-motion";
 import React from "react";
 
 interface CarouselChildProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -9,7 +10,9 @@ export const CarouselChild = (props: CarouselChildProps) => {
   const { children, customCSS, ...restProps } = props;
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
       css={css([
         {
           width: "100%",
@@ -18,9 +21,8 @@ export const CarouselChild = (props: CarouselChildProps) => {
         },
         customCSS,
       ])}
-      {...restProps}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };
