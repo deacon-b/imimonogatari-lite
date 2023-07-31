@@ -127,6 +127,7 @@ const PopularAnime = () => {
           })}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
+          key={anime.id}
         >
           <Link
             href={`/anime/${anime.id}`}
