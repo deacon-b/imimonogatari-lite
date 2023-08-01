@@ -263,7 +263,7 @@ export const AnimeDetailsPage = () => {
                   textAlign: "center",
                 })}
               >
-                Episode {anime.nextAiringEpisode.episode - 1 || "~"} will be
+                Episode {anime.nextAiringEpisode.episode || "~"} will be
                 airing in
               </h3>
               <h3
