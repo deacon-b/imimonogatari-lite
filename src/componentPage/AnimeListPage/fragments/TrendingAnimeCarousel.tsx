@@ -6,6 +6,7 @@ import { CarouselChild } from "../../../components/Carousel/CarouselChild";
 import Link from "next/link";
 import { gql, useQuery } from "@apollo/client";
 import { SerializedStyles } from "@emotion/react";
+import { useDraggable } from "src/hooks/useDraggable";
 
 const GET_TRENDING_ANIME = gql`
   query GetTrendingAnime {
