@@ -14,7 +14,7 @@ export const RecommendedAnime = ({ recommendations }: { recommendations: any; })
         flexDirection: "row",
         gap: "1rem",
         width: "100%",
-        marginBottom: "1rem",
+        paddingBottom: "2rem",
         overflowX: "scroll",
         overflowY: "hidden",
         "&::-webkit-scrollbar": {
