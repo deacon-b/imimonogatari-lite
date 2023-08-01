@@ -130,3 +130,19 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
+/* minimal scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #faf9fa;
+}
+::-webkit-scrollbar-thumb {
+  background: #d6d3d7;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b1abb4;
+}
+

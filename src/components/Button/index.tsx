@@ -27,15 +27,15 @@ export const Button = ({
     const sizeStyles: Record<string, CSSObject> = {
       sm: {
         padding: "0.5rem 1rem",
-        fontSize: "1rem",
+        fontSize: "0.75rem",
       },
       lg: {
         padding: "1rem 2rem",
         fontSize: "1.5rem",
-      },
+      },  
       md: {
         padding: "0.75rem 1rem",
-        fontSize: "1.25rem",
+        fontSize: "1rem",
       },
     };
     return sizeStyles[size];
@@ -45,7 +45,7 @@ export const Button = ({
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: "1rem",
+    borderRadius: "0.5rem",
     fontWeight: "bold",
     cursor: "pointer",
     border: "none",

@@ -2,6 +2,7 @@ import { SerializedStyles, css } from "@emotion/react";
 import { Button } from "src/components/Button";
 import { colors } from "src/utils/colors";
 import React from "react";
+import { useDraggable } from "src/hooks/useDraggable";
 
 export interface CarouselProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
