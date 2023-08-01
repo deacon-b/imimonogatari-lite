@@ -31,6 +31,7 @@ export const RecommendedAnime = ({ recommendations }: { recommendations: any; })
     >
       {recommendations.nodes?.map((recommendation: any) => {
         const animeData = recommendation.mediaRecommendation;
+        if (!animeData) return null;
         return (
           <MotionLink
             key={animeData.id}
