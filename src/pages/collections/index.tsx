@@ -1,10 +1,10 @@
-import { AnimeDetailsPage } from "src/componentPage/AnimeDetailsPage";
+import { CollectionListPage } from "src/componentPage/CollectionListPage";
 import { AnimeCollectionsProvider } from "src/contexts/animeCollection";
 
 export default function AnimeDetails() {
   return (
     <AnimeCollectionsProvider>
-      <AnimeDetailsPage />
+      <CollectionListPage />
     </AnimeCollectionsProvider>
   );
 }

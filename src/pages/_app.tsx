@@ -13,7 +13,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
   return (
     <>
       <ApolloProvider client={client}>
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
           <Component key={router.route} {...pageProps} />
         </AnimatePresence>
       </ApolloProvider>
