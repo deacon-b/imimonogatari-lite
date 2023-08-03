@@ -69,6 +69,7 @@ export const AddToCollectionModal = ({
             justifyContent: "space-between",
             padding: "0.5rem",
             borderRadius: "0.5rem",
+            gap: "1rem"
           })}
         >
           <input
