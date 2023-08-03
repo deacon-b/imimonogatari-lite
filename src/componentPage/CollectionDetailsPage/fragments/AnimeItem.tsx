@@ -19,7 +19,7 @@ export const AnimeItem = ({ anime, collectionName }: { anime: Anime; collectionN
 
   // Function to handle the drag direction
   const handleDragEnd = (e: any, info: any) => {
-    if (info.offset.x < -300 || info.offset.x > 300) {
+    if (info.offset.x < -100 || info.offset.x > 100) {
       setConfirmDelete(true);
     }
     setIsDeleting(false);
