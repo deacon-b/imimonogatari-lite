@@ -3,6 +3,7 @@ import { colors } from "src/utils/colors";
 import React from "react";
 import { Anime } from "src/hooks/useAnimeCollections";
 import { AnimeCollectionStatus } from "..";
+import Link from "next/link";
 
 export const Collection = ({
   collection,
