@@ -22,9 +22,9 @@ export function CollectionItem({ collection }: { collection: Collection; }) {
 
   // Function to handle the drag direction
   const handleDragEnd = (e: any, info: any) => {
-    if (info.offset.x < -300) {
+    if (info.offset.x < -100) {
       setConfirmDelete(true);
-    } else if (info.offset.x > 300) {
+    } else if (info.offset.x > 100) {
       setConfirmEdit(true);
     }
     setIsDeleting(false);
