@@ -50,7 +50,7 @@ export const CollectionDetailsPage = () => {
             color: colors.gray["500"],
             fontSize: "1rem",
             fontWeight: "500",
-            paddingLeft: "2rem",
+            padding: "2rem",
             paddingTop: "1rem",
           })}
         >
