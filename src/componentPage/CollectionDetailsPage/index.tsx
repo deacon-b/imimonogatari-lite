@@ -45,6 +45,17 @@ export const CollectionDetailsPage = () => {
           overflowX: "hidden",
         })}
       >
+        <p
+          css={css({
+            color: colors.gray["500"],
+            fontSize: "1rem",
+            fontWeight: "500",
+            paddingLeft: "2rem",
+            paddingTop: "1rem",
+          })}
+        >
+          You can delete animes from your collection by swiping left or right
+        </p>
         <div
           css={css({
             padding: "0.5rem",

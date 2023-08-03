@@ -25,10 +25,19 @@ export const CollectionListPage: React.FC = () => {
           flexDirection: "column",
           padding: "1rem",
           paddingTop: "4rem",
-          gap: "1rem",
+          gap: "0.5rem",
           overflowX: "hidden",
         })}
       >
+        <p
+          css={css({
+            color: colors.gray["500"],
+            fontSize: "1rem",
+            fontWeight: "500",
+          })}
+        >
+          You can delete collections by swiping left or edit them by swiping right
+        </p>
         <div
           css={css({
             display: "flex",
