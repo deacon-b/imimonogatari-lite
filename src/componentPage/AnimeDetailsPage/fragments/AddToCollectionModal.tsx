@@ -92,7 +92,7 @@ export const AddToCollectionModal = ({
             value={newCollectionName}
             onChange={(e) => {
               setNewCollectionName(e.target.value);
-              setIsValid(e.target.value.length > 0 || /^[a-zA-Z0-9- ]*$/.test(newCollectionName)) ;
+              setIsValid(e.target.value.length > 0 && /^[a-zA-Z0-9- ]*$/.test(newCollectionName)) ;
             }}
           />
           <div
