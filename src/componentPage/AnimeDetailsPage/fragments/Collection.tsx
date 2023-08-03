@@ -28,7 +28,8 @@ export const Collection = ({
         borderRadius: "0.5rem",
       })}
     >
-      <p
+      <Link
+        href={`/collections/${collection.id}`}
         css={css({
           color: colors.gray["800"],
           fontSize: "1rem",
@@ -38,7 +39,7 @@ export const Collection = ({
         })}
       >
         {collection.name}
-      </p>
+      </Link>
       <div
         css={css({
           display: "flex",
