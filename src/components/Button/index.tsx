@@ -88,6 +88,11 @@ export const Button = ({
         {
           "&:hover": hoverStyles,
           "&:active": activeStyles,
+          "&:disabled": {
+            cursor: "not-allowed",
+            backgroundColor: colors.gray["300"],
+            color: colors.gray["500"],
+          }
         },
         customCSS, // Allow custom CSS to override the default styles and variant styles
       ])}

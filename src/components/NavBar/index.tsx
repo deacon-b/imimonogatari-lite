@@ -9,12 +9,18 @@ import Link from "next/link";
 
 export const NavBar = ({
   hasBackButton = false,
+  isAtTopStatic = false,
 }: {
   hasBackButton?: boolean;
+  isAtTopStatic?: boolean;
 }) => {
   // check if scroll position is at the top
-  const [isAtTop, setIsAtTop] = React.useState(true);
+  const [isAtTop, setIsAtTop] = React.useState(!isAtTopStatic);
   React.useEffect(() => {
+    if (isAtTopStatic) {
+      setIsAtTop(false);
+      return;
+    }
     const handleScroll = () => {
       if (window.scrollY === 0) {
         setIsAtTop(true);
@@ -77,16 +83,18 @@ export const NavBar = ({
           Lite
         </span>
       </Link>
-      <Button
-        size="md"
-        variant="ghost"
-        colorScheme="primary"
-        customCSS={css({
-          padding: "0.5rem",
-        })}
-      >
-        <MdBookmarks />
-      </Button>
+      <Link href="/collections">
+        <Button
+          size="md"
+          variant="ghost"
+          colorScheme="primary"
+          customCSS={css({
+            padding: "0.5rem",
+          })}
+        >
+          <MdBookmarks />
+        </Button>
+      </Link>
     </motion.nav>
   );
 };

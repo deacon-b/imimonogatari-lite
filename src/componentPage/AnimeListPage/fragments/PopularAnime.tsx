@@ -107,13 +107,13 @@ export const PopularAnime = () => {
                   fontSize: "0.75rem",
                 })}
               >
-                {anime.genres.map((genre: any) => (
-                  <>
+                {anime.genres.map((genre: any, i: number) => (
+                  <span key={i}>
                     {genre +
                       (anime.genres.indexOf(genre) === anime.genres.length - 1
                         ? ""
                         : " • ")}
-                  </>
+                  </span>
                 ))}
               </p>
             </div>

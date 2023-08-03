@@ -10,6 +10,7 @@ export interface Anime{
 };
 
 export interface Collection{
+  id: string;
   name: string;
   animes: Anime[];
 };
@@ -17,6 +18,7 @@ export interface Collection{
 export const useAnimeCollections = () => {
   // State to store anime collections
   const [collections, setCollections] = useState<Collection[]>([]);
+  const [isReady, setIsReady] = useState(false);
 
   // Load collections from local storage on initial mount
   useEffect(() => {
@@ -24,11 +26,12 @@ export const useAnimeCollections = () => {
     if (storedCollections) {
       setCollections(JSON.parse(storedCollections));
     }
+    setIsReady(true);
   }, []);
 
   // Save collections to local storage whenever it changes
   useEffect(() => {
-    localStorage.setItem('animeCollections', JSON.stringify(collections));
+    if (isReady) localStorage.setItem('animeCollections', JSON.stringify(collections));
   }, [collections]);
 
   // Function to check if a collection name already exists
@@ -46,6 +49,7 @@ export const useAnimeCollections = () => {
   const createCollection = (collectionName: string): void => {
     if (!isCollectionNameExists(collectionName)) {
       const newCollection: Collection = {
+        id: Date.now().toString(),
         name: collectionName,
         animes: [],
       };

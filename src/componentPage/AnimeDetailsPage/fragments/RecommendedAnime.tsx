@@ -4,8 +4,13 @@ import React from "react";
 import { useDraggable } from "src/hooks/useDraggable";
 import { MotionLink } from "..";
 
-export const RecommendedAnime = ({ recommendations }: { recommendations: any; }) => {
-  const ref = React.useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
+export const RecommendedAnime = ({
+  recommendations,
+}: {
+  recommendations: any;
+}) => {
+  const ref =
+    React.useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
   const { events } = useDraggable(ref);
   return (
     <div
@@ -20,7 +25,7 @@ export const RecommendedAnime = ({ recommendations }: { recommendations: any; })
         "&::-webkit-scrollbar": {
           display: "none",
         },
-        "-ms-overflow-style": "none",
+        msOverflowStyle: "none",
         scrollbarWidth: "none",
         padding: "1rem",
         userSelect: "none",
@@ -60,10 +65,12 @@ export const RecommendedAnime = ({ recommendations }: { recommendations: any; })
                 height: "160px",
                 objectFit: "cover",
                 borderRadius: "0.5rem",
-                boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+                boxShadow:
+                  "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
                 userSelect: "none",
               })}
-              draggable={false} />
+              draggable={false}
+            />
             <div
               css={css({
                 display: "flex",
@@ -98,7 +105,9 @@ export const RecommendedAnime = ({ recommendations }: { recommendations: any; })
                 })}
               >
                 {animeData.nextAiringEpisode
-                  ? `${animeData.nextAiringEpisode.episode - 1} | ${animeData.episodes || "~"}`
+                  ? `${animeData.nextAiringEpisode.episode - 1} | ${
+                      animeData.episodes || "~"
+                    }`
                   : animeData.episodes || "~"}
               </p>
             </div>
