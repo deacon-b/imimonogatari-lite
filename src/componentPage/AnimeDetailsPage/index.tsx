@@ -10,6 +10,7 @@ import { Button } from "src/components/Button";
 import Link from "next/link";
 import { RecommendedAnime } from "./fragments/RecommendedAnime";
 import { Stat } from "./fragments/Stat";
+import { AddToCollectionModal } from "./fragments/AddToCollectionModal";
 
 export const MotionLink = motion(Link);
 
@@ -75,9 +76,6 @@ export const AnimeDetailsPage = () => {
     variables: {
       id: router.query.id,
     },
-    onCompleted: (data) => {
-      console.log(data);
-    },
   });
   const anime = data?.Media || null;
 
@@ -112,39 +110,50 @@ export const AnimeDetailsPage = () => {
     return [days, hours, minutes, seconds];
   };
 
-  if (loading) return (
-    <PageContainer>
-      <div css={css({
-        width: '100%',
-        height: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1rem',
-        alignItems: 'center',
-        justifyContent: 'center',
-      })}>
-        <motion.h3
-          // spin infinite
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 1 }}
+  const [open, setOpen] = React.useState(false);
+
+  if (loading)
+    return (
+      <PageContainer>
+        <div
           css={css({
-            color: colors.gray['800'],
-            fontSize: '2rem',
-            fontWeight: 'bold',
+            width: "100%",
+            height: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+            alignItems: "center",
+            justifyContent: "center",
           })}
-        >意</motion.h3>
-        <p css={css({
-          color: colors.gray['800'],
-          fontSize: '1.5rem',
-          fontWeight: 'bold',
-        })}>Loading...</p>
-      </div>
-    </PageContainer>
-  );
+        >
+          <motion.h3
+            // spin infinite
+            animate={{ rotate: 360 }}
+            transition={{ repeat: Infinity, duration: 1 }}
+            css={css({
+              color: colors.gray["800"],
+              fontSize: "2rem",
+              fontWeight: "bold",
+            })}
+          >
+            意
+          </motion.h3>
+          <p
+            css={css({
+              color: colors.gray["800"],
+              fontSize: "1.5rem",
+              fontWeight: "bold",
+            })}
+          >
+            Loading...
+          </p>
+        </div>
+      </PageContainer>
+    );
 
   return (
     <PageContainer>
-      <NavBar hasBackButton/>
+      <NavBar hasBackButton />
       <div
         css={css({
           display: "flex",
@@ -224,7 +233,14 @@ export const AnimeDetailsPage = () => {
               >
                 {anime.status}
               </p>
-              <Button size="md">Add to Collection</Button>
+              <Button onClick={() => setOpen(true)} size="md">
+                Add to Collection
+              </Button>
+              <AddToCollectionModal
+                open={open}
+                setOpen={setOpen}
+                anime={anime}
+              />
             </div>
           </div>
         </div>
@@ -349,6 +365,10 @@ export const AnimeDetailsPage = () => {
       <RecommendedAnime recommendations={anime.recommendations} />
     </PageContainer>
   );
+};
+
+export type AnimeCollectionStatus = {
+  [key: string]: boolean;
 };
 
 
