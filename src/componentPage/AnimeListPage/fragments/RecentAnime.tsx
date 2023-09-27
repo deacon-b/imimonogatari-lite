@@ -184,7 +184,11 @@ export const RecentAnime = () => {
                   marginTop: "0.25rem",
                 })}
               >
-                {anime.nextAiringEpisode?.episode? anime.nextAiringEpisode?.episode - 1 : "~"} | {anime.episodes || "~"}
+                {anime.nextAiringEpisode
+                  ? `${anime.nextAiringEpisode.episode - 1} | ${
+                      anime.episodes || "~"
+                    }`
+                  : anime.episodes || "~"}
               </p>
             </div>
           </MotionLink>
