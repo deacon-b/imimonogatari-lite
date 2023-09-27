@@ -268,7 +268,7 @@ export const AnimeDetailsPage = () => {
             gap: "1rem",
           })}
         >
-          {anime.status == "RELEASING" && (
+          {(anime.status == "RELEASING" && anime.nextAiringEpisode) && (
             <>
               <h3
                 css={css({
