@@ -44,7 +44,7 @@ const getSeasonAndYear = () => {
     case 0:
     case 1:
     case 2:
-      return { season: "WINTER", seasonYear: year - 1 };
+      return { season: "WINTER", seasonYear: year };
     case 3:
     case 4:
     case 5:
